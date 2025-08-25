@@ -19,3 +19,29 @@ class Solution {
 }
 
 
+
+// mine
+
+
+class Solution {
+    public int[] dailyTemperatures(int[] nums) {
+        int n = nums.length;
+        int [] ans = new int[n];
+        Stack<Integer> st = new Stack<>();
+
+        for (int index = n - 1; index >= 0; index--) {
+
+            while (!st.isEmpty() && nums[st.peek()] <= nums[index]) {
+                st.pop();
+            }
+
+            if (!st.isEmpty()) {
+                ans[index] = st.peek() - index;
+            }
+
+            st.push(index);
+        }
+
+        return ans;
+    }
+}

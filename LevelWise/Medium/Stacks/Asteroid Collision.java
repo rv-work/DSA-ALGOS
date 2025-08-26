@@ -1,32 +1,32 @@
 //  [Asteroid Collision](https://leetcode.com/problems/asteroid-collision/)
 
+import java.util.*;
 
 class Solution {
-    public int[] asteroidCollision(int[] asteroids) {
-        Stack<Integer> stack = new Stack<>();
-        
-        for (int asteroid : asteroids) {
+    public int[] asteroidCollision(int[] ast) {
+        Stack<Integer> st = new Stack<>();
+
+        for (int a : ast) {
             boolean alive = true;
-            while (!stack.isEmpty() && asteroid < 0 && stack.peek() > 0) {
-                if (stack.peek() < -asteroid) {
-                    stack.pop();
-                    continue;
-                } else if (stack.peek() == -asteroid) {
-                    stack.pop();
+            while (alive && a < 0 && !st.isEmpty() && st.peek() > 0) {
+                if (st.peek() < -a) {
+                    st.pop(); 
+                } else if (st.peek() == -a) {
+                    st.pop(); 
+                    alive = false;
+                } else {
+                    alive = false;
                 }
-                alive = false;
-                break;
             }
             if (alive) {
-                stack.push(asteroid);
+                st.push(a);
             }
         }
-        
-        int[] result = new int[stack.size()];
-        for (int i = stack.size() - 1; i >= 0; --i) {
-            result[i] = stack.pop();
+
+        int[] res = new int[st.size()];
+        for (int i = st.size() - 1; i >= 0; i--) {
+            res[i] = st.pop();
         }
-        
-        return result;
+        return res;
     }
 }

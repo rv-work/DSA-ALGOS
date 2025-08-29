@@ -23,7 +23,6 @@ class Solution {
         Queue<TreeNode> q = new LinkedList<>();
         List<List<Integer>> ans = new ArrayList<>();
         if (root == null) return ans;
-
         q.add(root);
         boolean leftToRight = true;
 

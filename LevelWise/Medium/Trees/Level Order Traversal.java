@@ -1,5 +1,4 @@
 //  [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/)
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -37,4 +36,4 @@ class Solution {
 
         return ans;
     }
-}
+}   

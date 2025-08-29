@@ -1,6 +1,5 @@
 //  [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/)
 
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -18,11 +17,11 @@
  */
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>() ;
         Queue<TreeNode> q = new LinkedList<>();
         if(root == null) return ans;
         q.add(root);
-        while(!q.isEmpty()){
+         while(!q.isEmpty()){
             List<Integer> level = new ArrayList<>();
             int size = q.size();
             while(size > 0){

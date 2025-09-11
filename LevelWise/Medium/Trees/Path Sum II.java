@@ -26,20 +26,16 @@
                      List<List<Integer>> output, List<Integer> currentPath) {
         if (root == null) return;
 
-        // Add current node's value to sum and path
         curSum += root.val;
         currentPath.add(root.val);
 
-        // If it's a leaf and path sum equals target, add path to result
         if (root.left == null && root.right == null && curSum == targetSum) {
             output.add(new ArrayList<>(currentPath));
         }
 
-        // Recur for children
         dfs(root.left, targetSum, curSum, output, currentPath);
         dfs(root.right, targetSum, curSum, output, currentPath);
 
-        // Backtrack: remove current node
         currentPath.remove(currentPath.size() - 1);
     }
 }

@@ -93,7 +93,7 @@ class Solution {
 
 class Solution {
     public int maxSumDivThree(int[] nums) {
-        int[] dp = {0, 0, 0};
+        int[] dp = {0, 0, 0};....
 
         for (int num : nums) {
             int[] prev = dp.clone();

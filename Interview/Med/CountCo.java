@@ -10,6 +10,6 @@ class Solution {
         for( ; l<=r; l++){
            col+=(D.charAt(l)!='S'?1:0);
         }
-        return col;  
+        return col;  ;
     }
 }

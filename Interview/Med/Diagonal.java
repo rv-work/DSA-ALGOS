@@ -58,3 +58,66 @@ class Solution {
         return res;
     }
 }
+
+
+
+
+
+
+
+class Solution {
+
+    boolean check(int i, int j, int m, int n) {
+        return i >= 0 && j >= 0 && i < n && j < m;
+    }
+
+    public int[] findDiagonalOrder(int[][] mat) {
+        int m = mat[0].length;
+        int n = mat.length;
+
+        int[] ans = new int[n * m];
+
+        int d = 1; // 1 = up-right, 0 = down-left
+        int i = 0, j = 0, k = 0;
+
+        while (k < n * m) {
+
+            while (check(i, j, m, n)) {
+                ans[k++] = mat[i][j];
+
+                if (d == 1) {
+                    i--;
+                    j++;
+                } else {
+                    i++;
+                    j--;
+                }
+            }
+
+           
+            if (d == 1) {
+                if (j >= m) {   // right wall hit
+                    i += 2;
+                    j = m - 1;
+                } else {        // top wall hit
+                    i = 0;
+                }
+                d = 0;
+            } else {
+                if (i >= n) {   // bottom wall hit
+                    j += 2;
+                    i = n - 1;
+                } else {        // left wall hit
+                    j = 0;
+                }
+                d = 1;
+            }
+        }
+
+        return ans;
+    }
+}
+
+
+
+

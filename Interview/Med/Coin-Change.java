@@ -53,3 +53,44 @@ class Solution {
         return dp[amount] > amount ? -1 : dp[amount];
     }
 }
+
+
+
+
+
+
+
+class Solution {
+
+    int getMin(int[] coins, int[][] dp, int amount, int ind) {
+
+        if (ind == 0) {
+            if (amount % coins[0] == 0) return amount / coins[0];
+            return Integer.MAX_VALUE;
+        }
+
+        if (dp[ind][amount] != -1) return dp[ind][amount];
+
+        int take = Integer.MAX_VALUE;
+
+        if (coins[ind] <= amount) {
+            int res = getMin(coins, dp, amount - coins[ind], ind);
+            if (res != Integer.MAX_VALUE) take = 1 + res;
+        }
+
+        int notTake = getMin(coins, dp, amount, ind - 1);
+
+        return dp[ind][amount] = Math.min(take, notTake);
+    }
+
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        int[][] dp = new int[n][amount + 1];
+
+        for (int i = 0; i < n; i++)
+            Arrays.fill(dp[i], -1);
+
+        int ans = getMin(coins, dp, amount, n - 1);
+        return (ans == Integer.MAX_VALUE ? -1 : ans);
+    }
+}

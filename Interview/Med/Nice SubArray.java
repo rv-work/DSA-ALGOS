@@ -23,3 +23,79 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+
+        int n = nums.length;
+        int l = 0, r = 0;
+
+        int cntOdd = 0;      // window ke andar odd count
+        int ans = 0;
+        int firstEvenCount = 0;   // left side pe kitne even hain (before first odd)
+
+        while (r < n) {
+
+            // Right pointer se odd count
+            if ((nums[r] & 1) == 1) {
+                cntOdd++;
+                firstEvenCount = 0;   // new odd mila → even streak reset
+            }
+
+            // Jab window me exactly k odd ho jaye
+            if (cntOdd == k) {
+
+                // Count how many leading evens on left
+                while ((nums[l] & 1) == 0) {
+                    firstEvenCount++;
+                    l++;
+                }
+
+                // Ab l ek odd pr hai → ye subarray k-th odd se start hota hai
+                ans += firstEvenCount + 1;
+            }
+
+            // Jab cntOdd > k — window shrink karo
+            while (cntOdd > k) {
+
+                if ((nums[l] & 1) == 1) cntOdd--;
+                l++;
+
+                // New window me exactly k odds hone par leading evens count karo
+                if (cntOdd == k) {
+                    firstEvenCount = 0;
+                    while ((nums[l] & 1) == 0) {
+                        firstEvenCount++;
+                        l++;
+                    }
+                    ans += firstEvenCount + 1;
+                }
+            }
+
+            r++;
+        }
+
+        return ans;
+    }
+}
+
+

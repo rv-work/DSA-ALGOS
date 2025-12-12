@@ -99,3 +99,26 @@ class Solution {
 }
 
 
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+
+        int n = nums.length;
+        int prefix = 0; 
+        int ans = 0;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1); 
+
+        for (int num : nums) {
+
+            // convert to 0/1 (odd → 1)
+            prefix += (num % 2);
+
+            ans += map.getOrDefault(prefix - k, 0);
+
+            map.put(prefix, map.getOrDefault(prefix, 0) + 1);
+        }
+
+        return ans;
+    }
+}

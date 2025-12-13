@@ -17,7 +17,7 @@ class Solution {
 
                 Map<Integer, Integer> mp = new HashMap<>();
                 mp.put(0, 1);
-                int ps = 0;
+                int ps = 0;wor
 
                 for (int row = 0; row < n; row++) {
                     ps += mat[row][col] - (sc > 0 ? mat[row][sc - 1] : 0);

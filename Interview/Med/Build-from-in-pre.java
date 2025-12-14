@@ -86,3 +86,6 @@
         return build(preorder, inorder, 0, inorder.length - 1, new Index());
     }
 }
+
+
+// either global rkho ya fir static taki left right ko shared me jaye to problem na ho 

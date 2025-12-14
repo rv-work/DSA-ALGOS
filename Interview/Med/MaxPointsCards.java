@@ -96,3 +96,23 @@ class Solution {
 }
 
 
+class Solution {
+    public int maxScore(int[] p, int k) {
+        int n = p.length;
+
+        int curr = 0;
+        for (int i = 0; i < k; i++) {
+            curr += p[i];
+        }
+
+        int ans = curr;
+
+        for (int i = 1; i <= k; i++) {
+            curr -= p[k - i];      
+            curr += p[n - i];     
+            ans = Math.max(ans, curr);
+        }
+
+        return ans;
+    }
+}

@@ -25,3 +25,48 @@ class Solution { // space...
 
 
 
+
+
+class Solution {
+
+    public int maxScore(int[] p, int k) {
+        int n = p.length;
+
+        int[][] dp = new int[k + 1][k + 1];
+
+        // build bottom-up
+        for (int i = 0; i <= k; i++) {
+            for (int j = 0; j <= k; j++) {
+
+                if (i + j > k) continue;
+
+                if (i > 0) {
+                    dp[i][j] = Math.max(
+                        dp[i][j],
+                        dp[i - 1][j] + p[i - 1]
+                    );
+                }
+
+                if (j > 0) {
+                    dp[i][j] = Math.max(
+                        dp[i][j],
+                        dp[i][j - 1] + p[n - j]
+                    );
+                }
+            }
+        }
+
+        int ans = 0;
+        for (int i = 0; i <= k; i++) {
+            ans = Math.max(ans, dp[i][k - i]);
+        }
+
+        return ans;
+    }
+}
+
+
+
+
+
+

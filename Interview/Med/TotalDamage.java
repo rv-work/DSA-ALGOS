@@ -38,3 +38,34 @@ class Solution {
         return dp[0];
     }
 }     
+
+
+
+
+
+
+
+
+class Solution {
+
+    boolean check(int num1 , int num2){
+      return num1 != num2-2 && num1 != num2-1 && num1 != num2+2 && num1 != num2+1;
+    }
+
+    long ans(int [] power , int idx , int last){
+        if(idx < 0){
+            return 0;
+        }
+
+        long cast = Integer.MIN_VALUE;
+        if(check(power[idx] , last)) cast = power[idx] + ans(power , idx-1 , power[idx]);
+        long notCast = ans(power , idx-1 ,last);
+
+        return Math.max(cast , notCast);
+    }
+
+    public long maximumTotalDamage(int[] power) {
+        Arrays.sort(power);
+        return ans(power , power.length - 1 , -2);
+    }
+}

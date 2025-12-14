@@ -70,3 +70,27 @@ class Solution {
 
 
 
+class Solution {
+    public int maxScore(int[] p, int k) {
+        int n = p.length;
+
+        int[] left = new int[k + 1];
+        int[] right = new int[k + 1];
+
+        for (int i = 1; i <= k; i++) {
+            left[i] = left[i - 1] + p[i - 1];
+        }
+
+        for (int i = 1; i <= k; i++) {
+            right[i] = right[i - 1] + p[n - i];
+        }
+
+        int ans = 0;
+
+        for (int i = 0; i <= k; i++) {
+            ans = Math.max(ans, left[i] + right[k - i]);
+        }
+
+        return ans;
+    }
+}

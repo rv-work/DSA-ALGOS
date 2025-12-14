@@ -69,3 +69,56 @@ class Solution {
         return ans(power , power.length - 1 , -2);
     }
 }
+
+
+
+
+
+
+
+class Solution {
+
+    private long solve( int i, List<Integer> keys, Map<Integer, Long> freq, long[] dp) {
+        if (i >= keys.size()) return 0;
+        if (dp[i] != -1) return dp[i];
+
+        long skip = solve(i + 1, keys, freq, dp);
+
+        long take = freq.get(keys.get(i)) * keys.get(i);
+
+        int next = lowerBound(keys, i + 1, keys.get(i) + 3);
+        
+        take += solve(next, keys, freq, dp);
+
+        return dp[i] = Math.max(skip, take);
+    }
+
+    // first index >= target, search range [start .. end]
+    private int lowerBound(List<Integer> keys, int start, int target) {
+        int l = start, r = keys.size();
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (keys.get(mid) < target) l = mid + 1;
+            else r = mid;
+        }
+        return l;
+    }
+
+    public long maximumTotalDamage(int[] power) {
+
+        Map<Integer, Long> freq = new HashMap<>();
+        for (int p : power) {
+            freq.put(p, freq.getOrDefault(p, 0L) + 1);
+        }
+
+        List<Integer> keys = new ArrayList<>(freq.keySet());
+        Collections.sort(keys);
+
+        int n = keys.size();
+        long[] dp = new long[n];
+        Arrays.fill(dp, -1);
+
+        return solve(0, keys, freq, dp);
+    }
+    
+}

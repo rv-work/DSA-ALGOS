@@ -89,3 +89,50 @@
 
 
 // either global rkho ya fir static taki left right ko shared me jaye to problem na ho 
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+    int preIdx = 0;
+    HashMap<Integer, Integer> inMap = new HashMap<>();
+
+    private TreeNode build(
+        int[] preorder,
+        int[] inorder,
+        int inStart,
+        int inEnd
+    ) {
+        if (inStart > inEnd) return null;
+
+        int rootVal = preorder[preIdx++];
+        TreeNode root = new TreeNode(rootVal);
+
+        // O(1) lookup instead of scan
+        int idx = inMap.get(rootVal);
+
+        root.left  = build(preorder, inorder, inStart, idx - 1);
+        root.right = build(preorder, inorder, idx + 1, inEnd);
+
+        return root;
+    }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+
+        // build inorder index map
+        for (int i = 0; i < inorder.length; i++) {
+            inMap.put(inorder[i], i);
+        }
+
+        return build(preorder, inorder, 0, inorder.length - 1);
+    }
+}

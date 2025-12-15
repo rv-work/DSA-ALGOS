@@ -55,3 +55,34 @@ class Solution {
     return max;
   }
 }
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+
+        int n = s.length();
+        int l = 0, max = 0;
+        Map<Character, Integer> lastIndex = new HashMap<>();
+
+        for (int r = 0; r < n; r++) {
+            char ch = s.charAt(r);
+
+            if (lastIndex.containsKey(ch)) {
+                l = Math.max(l, lastIndex.get(ch) + 1);
+            }
+
+            lastIndex.put(ch, r);
+            max = Math.max(max, r - l + 1);
+        }
+
+        return max;
+    }
+}

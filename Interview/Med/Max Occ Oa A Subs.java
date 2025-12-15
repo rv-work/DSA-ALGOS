@@ -32,3 +32,52 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+
+class Solution {
+    public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+
+        int n = s.length();
+        int[] freq = new int[26];
+        int unique = 0;
+
+        Map<String, Integer> mp = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
+
+        int l = 0, ans = 0;
+
+        for (int r = 0; r < n; r++) {
+
+            char ch = s.charAt(r);
+            sb.append(ch);
+
+            int idx = ch - 'a';
+            if (freq[idx] == 0) unique++;
+            freq[idx]++;
+
+            if (sb.length() > minSize) {
+                char left = sb.charAt(0);
+                sb.deleteCharAt(0);  
+
+                int li = left - 'a';
+                freq[li]--;
+                if (freq[li] == 0) unique--;
+                l++;
+            }
+
+         
+            if (sb.length() == minSize && unique <= maxLetters) {
+                String key = sb.toString();  
+                mp.put(key, mp.getOrDefault(key, 0) + 1);
+                ans = Math.max(ans, mp.get(key));
+            }
+        }
+
+        return ans;
+    }
+}

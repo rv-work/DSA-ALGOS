@@ -127,6 +127,33 @@ class Solution {
 }
 
 
+class Solution {
+
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        int[] prev = new int [amount + 1];
+        int[] curr = new int [amount + 1];
+
+        prev[0] = 1;
+        curr[0] = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j <= amount; j++) {
+                int take = 0;
+                if (j >= coins[i])
+                    take = curr[j - coins[i]];
+                int notTake = prev[j];
+
+                curr[j] = take + notTake;
+            }
+            prev = curr;
+        }
+
+        return prev[amount];
+    }
+}
+
+
 
 
 

@@ -1,0 +1,34 @@
+class Solution {
+    public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+
+        int n = s.length();
+        Map<String, Integer> mp = new HashMap<>();
+        int[] freq = new int[26];
+
+        int l = 0;
+        int unique = 0;
+        int ans = 0;
+
+        for (int r = 0; r < n; r++) {
+
+            int idx = s.charAt(r) - 'a';
+            if (freq[idx] == 0) unique++;
+            freq[idx]++;
+
+            if (r - l + 1 > minSize) {
+                int leftIdx = s.charAt(l) - 'a';
+                freq[leftIdx]--;
+                if (freq[leftIdx] == 0) unique--;
+                l++;
+            }
+
+            if (r - l + 1 == minSize && unique <= maxLetters) {
+                String sub = s.substring(l, r + 1);
+                mp.put(sub, mp.getOrDefault(sub, 0) + 1);
+                ans = Math.max(ans, mp.get(sub));
+            }
+        }
+
+        return ans;
+    }
+}

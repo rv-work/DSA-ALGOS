@@ -172,3 +172,43 @@ class Solution {
         return true;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+        Map<String, Integer> map = new HashMap<>();
+        int len = s.length();
+        int maxFreq = 0;
+        
+        for(int i = 0; (i + minSize - 1) < len; ++i){
+            int bitmap = 0;
+            
+            for(int j = i; j < len && (j - i) < maxSize; ++j){
+                bitmap |= 1 << (s.charAt(j) - 'a');
+            
+                if(Integer.bitCount(bitmap) > maxLetters) break;
+                
+                if(j - i + 1 >= minSize){
+                    String subString = s.substring(i, j + 1);
+                    int freq = map.getOrDefault(subString, 0) + 1;
+                    maxFreq = Math.max(maxFreq, freq);
+                    map.put(subString, freq);
+                }
+            }
+        }
+        
+        return maxFreq;
+    }
+}

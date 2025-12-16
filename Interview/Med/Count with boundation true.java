@@ -35,3 +35,35 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+class Solution {
+    public int numSubarrayBoundedMax(int[] nums, int left, int right) {
+
+        int ans = 0;
+
+        int lastBad = -1;   
+        int lastGood = -1;  
+
+        for (int r = 0; r < nums.length; r++) {
+
+           
+            if (nums[r] > right) {
+                lastBad = r;
+            }
+
+            if (nums[r] >= left) {
+                lastGood = r;
+            }
+
+            if (lastGood > lastBad) {
+                ans += (lastGood - lastBad);
+            }
+        }
+
+        return ans;
+    }
+}

@@ -67,3 +67,40 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+
+
+class Solution {
+    public int numSubarrayBoundedMax(int[] nums, int left, int right) {
+        int n = nums.length;
+        int l = 0,  r = 0;
+        int ans = 0;
+        int prevC = 0;
+
+        while (r < n) {
+            if (nums[r] >= left && nums[r] <= right) {
+                prevC = r - l + 1;
+                ans += prevC;
+            }
+
+            if (nums[r] < left) {
+                ans += prevC;
+            }
+
+            if (nums[r] > right) {
+                l = r + 1;
+                prevC = 0;
+            }
+
+            r++;
+        }
+
+        return ans;
+    }
+}
+

@@ -46,6 +46,41 @@ class Solution {
 
 
 
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+      List<Integer> res = new ArrayList<>();
+
+      recursionRight(root, 0, res);
+
+      return res;
+    }
+
+     private void recursionRight(TreeNode root, int level, List<Integer> res) {
+       
+        if (root == null) return;
+
+        if (res.size() == level) 
+            res.add(root.val);
+            
+            recursionRight(root.right, level + 1, res);
+            recursionRight(root.left, level + 1, res);
+        
+
+     }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Definition for a binary tree node.
@@ -86,31 +121,19 @@ class Solution {
 }
 
 
-
-
-
-
-
 class Solution {
-    public List<Integer> rightSideView(TreeNode root) {
-      List<Integer> res = new ArrayList<>();
-
-      recursionRight(root, 0, res);
-
-      return res;
+    
+    void fillRight(List<Integer> res , int level , TreeNode root){
+        if(root == null) return ;
+        
+        if(res.size() == level) res.add(root.val);
+        fillRight(res , level+1 , root.right);
+        fillRight(res , level+1 , root.left);
     }
 
-     private void recursionRight(TreeNode root, int level, List<Integer> res) {
-       
-        if (root == null) return;
-
-        if (res.size() == level) 
-            res.add(root.val);
-            
-            recursionRight(root.right, level + 1, res);
-            recursionRight(root.left, level + 1, res);
-        
-
-     }
-
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        fillRight(res , 0 , root);
+        return res;
+    }
 }

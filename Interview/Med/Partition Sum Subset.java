@@ -210,3 +210,47 @@ class Solution {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+    public boolean canPartition(int[] nums) {
+
+        int sum = 0;
+        for (int x : nums) sum += x;
+        if (sum % 2 != 0) return false;
+
+        int target = sum / 2;
+
+        boolean[] dp = new boolean[target + 1];
+        dp[0] = true;
+
+        for (int num : nums) {
+            for (int j = target; j >= num; j--) {
+                dp[j] = dp[j] || dp[j - num];
+            }
+        }
+
+        return dp[target];
+    }
+}
+
+
+// why reverse
+
+// nums = [2]
+// target = 4
+// dp = [T, F, F, F, F]
+// dp[2] = dp[2] || dp[0]
+// dp[2] = true
+// dp = [T, F, T, F, F]
+// dp[4] = dp[4] || dp[2]
+// dp = [T, F, T, F, T]   // 2 + 2 joki nhi hain........

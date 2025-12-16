@@ -167,3 +167,46 @@ class Solution {
        
     }
 }
+
+
+
+
+
+
+
+class Solution {
+
+    public boolean canPartition(int[] nums) {
+        int n = nums.length;
+        int sum = 0;
+        for (int num : nums)
+            sum += num;
+            
+        if (sum % 2 != 0)
+            return false;
+
+        int target = sum / 2;
+        int[] prev = new int[target + 1];
+        int[] curr = new int[target + 1];
+
+        prev[0] = 1;
+        curr[0] = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j <= target; j++) {
+
+                int take = 0;
+                if (j >= nums[i])
+                    take = prev[j - nums[i]];
+                int notTake = prev[j];
+
+                curr[j] = Math.max(take, notTake);
+
+            }
+            prev = curr.clone();
+        }
+
+        return prev[target] == 1;
+
+    }
+}

@@ -61,3 +61,35 @@ class Solution {
        return ans(nums , sum/2 , n-1 , dp);
     }
 }
+
+
+
+
+
+
+class Solution {
+
+    int ans(int [] nums , int target , int idx ,  int [][] dp){
+        if(target == 0) return 1;
+        if(idx < 0) return 0;
+        if(dp[idx][target] != -1) return dp[idx][target] ;
+
+        int take = 0;
+        if(target >= nums[idx]) take = ans(nums , target - nums[idx] , idx-1 ,dp);
+        int notTake = ans(nums , target  , idx-1 , dp);
+
+        return dp[idx][target] = Math.max(take , notTake);
+         
+    }
+
+
+    public boolean canPartition(int[] nums) {
+       int n = nums.length;
+       int sum = 0;
+       for(int num : nums) sum += num;
+       int [][] dp = new int[n][sum/2 + 1];
+       for(int arr[] : dp) Arrays.fill(arr , -1);
+       if(sum % 2 != 0) return false;
+       return ans(nums , sum/2 , n-1 , dp) == 1;
+    }
+}

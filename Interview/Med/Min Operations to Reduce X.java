@@ -111,3 +111,42 @@ class Solution {
         return ans == Integer.MAX_VALUE ? -1 : ans;
     }
 }
+
+
+
+
+
+
+
+
+
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        int n = nums.length;
+
+        int sum = 0;
+        for (int num : nums) sum += num;
+
+        int needed = sum - x;
+        if (needed == 0) return n;   
+
+        Map<Integer, Integer> mp = new HashMap<>();
+        mp.put(0, -1);              
+
+        int pre = 0;
+        int len = -1;
+
+        for (int i = 0; i < n; i++) {
+            pre += nums[i];
+
+            if (mp.containsKey(pre - needed)) {
+                len = Math.max(len, i - mp.get(pre - needed));
+            }
+
+            // store first occurrence only
+            mp.putIfAbsent(pre, i);
+        }
+
+        return len == -1 ? -1 : n - len;
+    }
+}

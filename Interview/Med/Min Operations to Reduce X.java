@@ -73,3 +73,41 @@ class Solution {
         return ans == Integer.MAX_VALUE ? -1 : ans;
     }
 }
+
+
+
+
+
+
+
+
+class Solution {
+
+    int ans = Integer.MAX_VALUE;
+
+    void backtrack(int[] nums, int i, int j, int x, int ops) {
+
+        // success case
+        if (x == 0) {
+            ans = Math.min(ans, ops);
+            return;
+        }
+
+        // invalid cases
+        if (i > j || x < 0) return;
+
+        // pruning (optional but logical)
+        if (ops >= ans) return;
+
+        // take from left
+        backtrack(nums, i + 1, j, x - nums[i], ops + 1);
+
+        // take from right
+        backtrack(nums, i, j - 1, x - nums[j], ops + 1);
+    }
+
+    public int minOperations(int[] nums, int x) {
+        backtrack(nums, 0, nums.length - 1, x, 0);
+        return ans == Integer.MAX_VALUE ? -1 : ans;
+    }
+}

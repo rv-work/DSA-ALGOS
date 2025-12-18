@@ -349,3 +349,46 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public int longestArithSeqLength(int[] nums) {
+        int n = nums.length;
+        int ans = 0;
+
+        int[][] dp = new int[n][1001];
+
+
+        for(int i=1; i<n; i++){
+            for(int j=0; j<i; j++){
+
+                int diff = nums[i] - nums[j] + 500;
+                int cnt = 1;
+
+                if(dp[j][diff] != 0) dp[i][diff]  = 1 + dp[j][diff]; 
+                // dp[j][diff] AP end ho rahi thi j par aur ab i use AP ka next element ban raha hai
+
+                ans = Math.max(ans , dp[i][diff]);
+
+                
+            }
+        }
+
+        return ans;
+    }
+}
+
+
+// core dp[a][b]... length of AP that have CM as b and inding as a index.. from 0 index

@@ -82,3 +82,49 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+class Solution {
+
+    int solve(int[] nums, int idx, int diff, int[][] dp){
+
+        int n = nums.length;
+        int max = 0;
+        int d = diff + 500; // shift to positive index
+
+        if(dp[idx][d] != -1) 
+            return dp[idx][d];
+
+        for(int next = idx + 1; next < n; next++){
+            if(nums[next] - nums[idx] == diff){
+                max = Math.max(max, 1 + solve(nums, next, diff, dp));
+            }
+        }
+
+        return dp[idx][d] = max;
+    }
+
+    public int longestArithSeqLength(int[] nums) {
+
+        int n = nums.length;
+        int ans = 0;
+
+        int[][] dp = new int[n][1001]; // +500 to manage -ve diffrence
+
+        for(int[] row : dp)
+            Arrays.fill(row, -1);
+
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                ans = Math.max(ans,
+                        2 + solve(nums, j, nums[j] - nums[i], dp));
+            }
+        }
+
+        return ans;
+    }
+}

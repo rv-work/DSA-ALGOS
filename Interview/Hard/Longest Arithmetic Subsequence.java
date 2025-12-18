@@ -233,3 +233,39 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+
+class Solution {
+    public int longestArithSeqLength(int[] nums) {
+        
+        int n = nums.length;
+        int ans = 1;
+
+        // dp[i] = map(diff -> length from i)
+        Map<Integer, Integer>[] dp = new HashMap[n];
+
+        for(int i = 0; i < n; i++){
+            dp[i] = new HashMap<>();
+        }
+
+        for(int i = n-1; i >= 0; i--){
+            for(int next = i+1; next < n; next++){
+                
+                int diff = nums[next] - nums[i];
+
+                int len = dp[next].getOrDefault(diff, 0);
+
+                dp[i].put(diff, Math.max(dp[i].getOrDefault(diff, 0), 1 + len));
+
+                ans = Math.max(ans, dp[i].get(diff) + 1);
+            }
+        }
+
+        return ans;
+    }
+}

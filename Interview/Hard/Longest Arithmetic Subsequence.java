@@ -361,8 +361,6 @@ class Solution {
 
 
 
-
-
 class Solution {
     public int longestArithSeqLength(int[] nums) {
         int n = nums.length;
@@ -375,9 +373,11 @@ class Solution {
             for(int j=0; j<i; j++){
 
                 int diff = nums[i] - nums[j] + 500;
+                int cnt = 1; // we have i count 1
 
-                if(dp[j][diff] != 0) dp[i][diff]  = 1 + dp[j][diff]; 
-                // dp[j][diff] AP end ho rahi thi j par aur ab i use AP ka next element ban raha hai
+                if(dp[j][diff] != 0) cnt  = dp[j][diff];
+
+                dp[i][diff] = 1 + cnt; // iska matlab hai agar cnt update nhi huaa hoag to i aur j 1 + 1... aur gaar mil gya hoga to vo ans hoga j tak ka ek aur add ho jayega 1 to vo aise ho gya 
 
                 ans = Math.max(ans , dp[i][diff]);
 
@@ -390,4 +390,5 @@ class Solution {
 }
 
 
-// core dp[a][b]... length of AP that have CM as b and inding as a index.. from 0 index
+// dp[j][diff] AP end ho rahi thi j par aur ab i use AP ka next element ban raha hai
+// core dp[a][b]... length of AP that have CM as b and inding as a.. from 0 index

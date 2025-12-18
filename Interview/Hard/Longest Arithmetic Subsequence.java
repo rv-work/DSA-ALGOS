@@ -128,3 +128,50 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+class Solution {
+
+    int solve(int[] nums, int idx, int diff,  Map<Integer , Integer> [] dp){
+
+        int n = nums.length;
+        int max = 0;
+      
+
+        if(dp[idx].containsKey(diff)) 
+            return dp[idx].get(diff);
+
+        for(int next = idx + 1; next < n; next++){
+            if(nums[next] - nums[idx] == diff){
+                max = Math.max(max, 1 + solve(nums, next, diff, dp));
+            }
+        }
+
+        dp[idx].put(diff , max);
+        return max;
+    }
+
+    public int longestArithSeqLength(int[] nums) {
+
+        int n = nums.length;
+        int ans = 0;
+
+        Map<Integer , Integer> [] dp = new HashMap[n]; 
+
+        for(int i = 0; i< n; i++){
+            dp[i] = new HashMap<>();
+        } 
+
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                ans = Math.max(ans,
+                        2 + solve(nums, j, nums[j] - nums[i], dp));
+            }
+        }
+
+        return ans;
+    }
+}

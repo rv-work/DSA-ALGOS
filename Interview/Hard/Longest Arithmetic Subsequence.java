@@ -175,3 +175,27 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+class Solution {
+    public int longestArithSeqLength(int[] nums) {
+        int n = nums.length;
+        int ans = 1;
+
+        int[][] dp = new int[n][1001];
+
+        for(int i=n-1; i>=0; i--){
+            for(int next=i+1; next<n; next++){
+                int diff = nums[next] - nums[i] + 500;
+                dp[i][diff] = Math.max(dp[i][diff], 1 + dp[next][diff]);
+                ans = Math.max(ans, dp[i][diff] + 1);
+            }
+        }
+
+        return ans;
+    }
+}

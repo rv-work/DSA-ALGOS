@@ -311,3 +311,41 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public int longestArithSeqLength(int[] nums) {
+        int n = nums.length;
+        int ans = 0;
+
+        int[][] dp = new int[n][1001];
+
+        for(int [] arr  : dp) Arrays.fill(arr ,-1);
+
+        for(int i=1; i<n; i++){
+            for(int j=0; j<i; j++){
+
+                int diff = nums[i] - nums[j] + 500;
+                int cnt = 1;
+
+                if(dp[j][diff] != -1) cnt  = dp[j][diff];
+
+                dp[i][diff] = 1 + cnt;
+
+                ans = Math.max(ans , dp[i][diff]);
+
+                
+            }
+        }
+
+        return ans;
+    }
+}

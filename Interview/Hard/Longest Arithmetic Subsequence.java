@@ -42,3 +42,43 @@
 // hain vo dekhna hai
 
 // niche shi hai
+
+
+
+
+
+
+
+
+class Solution {
+
+    int solve(int[] nums, int idx, Integer diff){
+
+        int n = nums.length;
+        int max = 0;
+
+        for(int next = idx + 1; next < n; next++){
+
+            if(diff == nums[next] - nums[idx]){
+                max = Math.max(max,  1 + solve(nums, next, diff));
+            }
+        }
+
+        return max;
+    }
+
+    public int longestArithSeqLength(int[] nums) {
+
+        int n = nums.length;
+        int ans = 0;
+
+        for(int i = 0; i < n; i++){
+            for(int j = i+1; j < n; j++){
+                ans = Math.max(ans,
+                        2 + solve(nums, j, nums[j] - nums[i])); 
+            }
+        }
+
+        return ans;
+    }
+}

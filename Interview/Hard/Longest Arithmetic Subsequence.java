@@ -375,7 +375,6 @@ class Solution {
             for(int j=0; j<i; j++){
 
                 int diff = nums[i] - nums[j] + 500;
-                int cnt = 1;
 
                 if(dp[j][diff] != 0) dp[i][diff]  = 1 + dp[j][diff]; 
                 // dp[j][diff] AP end ho rahi thi j par aur ab i use AP ka next element ban raha hai

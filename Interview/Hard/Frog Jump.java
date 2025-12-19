@@ -38,3 +38,59 @@ class Solution {
     return ans(stones, 1, 1, mp);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+  boolean ans(int[] stones, int idx, int lastJumped, Map<Long, Integer> mp) {
+    if (idx >= stones.length - 1)
+      return true;
+
+    for (int d = -1; d <= 1; d++) {
+
+      int nextJump = lastJumped + d;
+      if (nextJump <= 0) continue;
+
+      long nextStone = stones[idx] + nextJump;
+      if (!mp.containsKey(nextStone)) continue;
+
+      int nextIndex = mp.get(nextStone);
+      if (nextIndex <= idx) continue;
+
+      if (ans(stones, nextIndex, nextJump, mp)) {
+          return true;
+      }
+
+      return false;
+  }
+
+  public boolean canCross(int[] stones) {
+    int n = stones.length;
+    if (stones[1] - stones[0] > 1)
+      return false;
+
+    Map<Long, Integer> mp = new HashMap<>();
+    for (int i = 0; i < n; i++) {
+      mp.put((long) stones[i], i);
+    }
+
+    return ans(stones, 1, 1, mp);
+  }
+}
+
+

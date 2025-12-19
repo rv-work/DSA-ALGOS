@@ -304,7 +304,7 @@ class Solution {
       if (n > 1 && stones[1] != 1)
           return false;
 
-      @SuppressWarnings("unchecked")
+ 
       Map<Long, Boolean>[] dp = new HashMap[n];
 
       for (int i = 0; i < n; i++)
@@ -317,4 +317,45 @@ class Solution {
       return ans(stones, 1, 1, mp, dp);
   }
 }
+
+
+
+class Solution {
+    public boolean canCross(int[] stones) {
+        int n = stones.length;
+        
+        if (stones[1] != 1)
+            return false;
+
+        HashSet<Integer>[] dp = new HashSet[n];
+
+        for (int i = 0; i < n; i++)
+            dp[i] = new HashSet<>();
+
+        dp[1].add(1);
+
+        for (int i = 2; i < n; i++) {
+
+            for (int j = i - 1; j >= 0; j--) {
+
+                int diff = stones[i] - stones[j];
+
+                if (diff > j + 1) break; 
+
+                if (dp[j].contains(diff) ||
+                    dp[j].contains(diff - 1) ||
+                    dp[j].contains(diff + 1)) {
+
+                    dp[i].add(diff);
+
+                    if (i == n - 1) return true;
+                }
+            }
+        }
+
+        return !dp[n - 1].isEmpty();
+    }
+}
+
+
 

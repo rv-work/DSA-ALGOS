@@ -359,3 +359,39 @@ class Solution {
 
 
 
+class Solution {
+
+    
+
+    public boolean canCross(int[] stones) {
+        int n = stones.length;
+        if (stones[1] !=  1)
+            return false;
+
+        Map<Long, Boolean>[] dp = new HashMap[n];
+        for (int i = 0; i < n; i++) dp[i] = new HashMap<>();
+        
+        dp[0].put((long)stones[0] , true);
+        dp[0].put((long)stones[1] , true);
+
+        boolean ans = false;
+
+        for(int i = 1; i<n; i++){
+            for(int j = i-1; j>=0; j--){
+              int jumpNeed = stones[i] - stones[j];
+
+              if(dp[j].containsKey((long)jumpNeed) && dp[j].get((long)jumpNeed)){
+                for(int jump = jumpNeed - 1; jump <= jumpNeed + 1; jump++){
+                    dp[i].put((long)jump  , true);
+                    if(stones[n-1] == jump + stones[i]) ans = true;
+                }
+              }
+
+            } 
+        }     
+       return ans;
+    }
+}
+
+
+

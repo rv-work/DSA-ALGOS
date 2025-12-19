@@ -257,3 +257,64 @@ class Solution {
       return ans(stones, 1, 1, mp, dp);
   }
 }
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+  boolean ans(int[] stones, int idx, int lastJumped, Map<Long, Integer> mp, Map<Long, Boolean>[] dp) {
+      if (idx == stones.length - 1)
+          return true;
+
+      if (dp[idx].containsKey((long) lastJumped))
+          return dp[idx].get((long) lastJumped);
+
+      for (int d = -1; d <= 1; d++) {
+
+          int nextJump = lastJumped + d;
+          if (nextJump <= 0) continue;
+
+          long nextStone = stones[idx] + nextJump;
+          if (!mp.containsKey(nextStone)) continue;
+
+          int nextIndex = mp.get(nextStone);
+          if (nextIndex <= idx) continue;
+
+          if (ans(stones, nextIndex, nextJump, mp, dp)) {
+              dp[idx].put((long) lastJumped, true);
+              return true;
+          }
+      }
+
+      dp[idx].put((long) lastJumped, false);
+      return false;
+  }
+
+  public boolean canCross(int[] stones) {
+
+      int n = stones.length;
+
+      if (n > 1 && stones[1] != 1)
+          return false;
+
+      @SuppressWarnings("unchecked")
+      Map<Long, Boolean>[] dp = new HashMap[n];
+
+      for (int i = 0; i < n; i++)
+          dp[i] = new HashMap<>();
+
+      Map<Long, Integer> mp = new HashMap<>();
+      for (int i = 0; i < n; i++)
+          mp.put((long) stones[i], i);
+
+      return ans(stones, 1, 1, mp, dp);
+  }
+}
+

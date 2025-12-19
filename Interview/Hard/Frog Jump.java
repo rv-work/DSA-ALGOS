@@ -395,3 +395,51 @@ class Solution {
 
 
 
+
+
+
+
+
+
+
+
+
+class Solution {
+
+    
+
+    public boolean canCross(int[] stones) {
+        int n = stones.length;
+        if (stones[1] != 1)
+            return false;
+
+        Set<Long>[] dp = new HashSet[n];
+        for (int i = 0; i < n; i++) dp[i] = new HashSet<>();
+
+      
+        dp[0].add((long)stones[1]);
+        dp[0].add((long)stones[0]);
+
+        boolean ans = false;
+
+        for(int i = 1; i<n; i++){
+            for(int j = i-1; j>=0; j--){
+              
+              if(dp[j].contains((long)stones[i])){
+
+                int jumpNeed = stones[i] - stones[j];
+
+                for(int jump = jumpNeed - 1; jump <= jumpNeed + 1; jump++){
+                    dp[i].add((long)(jump +  stones[i]));
+                    if(stones[n-1] == jump + stones[i]) ans = true;
+                }
+              }
+
+            } 
+        }     
+       return ans;
+    }
+}
+
+
+

@@ -170,3 +170,90 @@ public boolean canCross(int[] stones) {
    return ans(stones, 1, 1, mp, dp);
 }
 }
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+  boolean ans(int[] stones, int idx, int lastJumped, 
+              Map<Long, Integer> mp, Map<Long, Boolean>[] dp) {
+
+      if (idx == stones.length - 1)
+          return true;
+
+      if (dp[idx].containsKey((long) lastJumped))
+          return dp[idx].get((long) lastJumped);
+
+      boolean op = false;
+
+      // lastJumped - 1
+      if (lastJumped - 1 > 0) {
+          long nextStone = (long) stones[idx] + lastJumped - 1;
+          if (mp.containsKey(nextStone)) {
+              int nextIdx = mp.get(nextStone);
+              if (nextIdx > idx) {
+                  if (ans(stones, nextIdx, lastJumped - 1, mp, dp)) {
+                      dp[idx].put((long) lastJumped, true);
+                      return true;
+                  }
+              }
+          }
+      }
+
+      // lastJumped
+      {
+          long nextStone = (long) stones[idx] + lastJumped;
+          if (mp.containsKey(nextStone)) {
+              int nextIdx = mp.get(nextStone);
+              if (nextIdx > idx) {
+                  if (ans(stones, nextIdx, lastJumped, mp, dp)) {
+                      dp[idx].put((long) lastJumped, true);
+                      return true;
+                  }
+              }
+          }
+      }
+
+      // lastJumped + 1
+      {
+          long nextStone = (long) stones[idx] + lastJumped + 1;
+          if (mp.containsKey(nextStone)) {
+              int nextIdx = mp.get(nextStone);
+              if (nextIdx > idx) {
+                  if (ans(stones, nextIdx, lastJumped + 1, mp, dp)) {
+                      dp[idx].put((long) lastJumped, true);
+                      return true;
+                  }
+              }
+          }
+      }
+
+      dp[idx].put((long) lastJumped, false);
+      return false;
+  }
+
+  public boolean canCross(int[] stones) {
+
+      int n = stones.length;
+
+     if (stones[1] - stones[0] > 1)
+    return false;
+
+      Map<Long, Boolean>[] dp = new HashMap[n];
+      for (int i = 0; i < n; i++)
+          dp[i] = new HashMap<>();
+
+      Map<Long, Integer> mp = new HashMap<>();
+      for (int i = 0; i < n; i++)
+          mp.put((long) stones[i], i);
+
+      return ans(stones, 1, 1, mp, dp);
+  }
+}

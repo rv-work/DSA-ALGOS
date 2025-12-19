@@ -94,3 +94,45 @@ class Solution {
         return topo.size() != V;
     }
 }
+
+
+
+
+
+
+
+
+class Solution {
+
+    boolean dfs(List<List<Integer>> adj , boolean[] vis , boolean[] rec , int node){
+        vis[node] = true;
+        rec[node] = true;
+
+        for(int next : adj.get(node)){
+            if(!vis[next] && dfs(adj , vis , rec , next)) return true;
+            else if(rec[next]) return true; 
+        }
+
+        rec[node] = false;
+        return false;
+    }
+
+    public boolean isCyclic(int V, int[][] edges) {
+
+        boolean[] vis = new boolean[V];
+        boolean[] rec = new boolean[V];
+
+        List<List<Integer>> adj = new ArrayList<>();
+        for(int i = 0; i<V; i++) adj.add(new ArrayList<>());
+
+        for(int[] e : edges)
+            adj.get(e[0]).add(e[1]);
+
+        for(int i = 0; i<V; i++){
+            if(!vis[i] && dfs(adj , vis , rec , i)) return true;
+            
+        }
+
+        return false;
+    }
+}

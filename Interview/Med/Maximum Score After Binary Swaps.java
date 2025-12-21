@@ -37,9 +37,59 @@ class Solution {
 // [1,8,8,4,6,2]
 // s =
 // "110100"
-
-
 // Output
 // 20
 // Expected
 // 17
+
+
+
+
+
+
+
+
+class Solution {
+    public long maximumScore(int[] nums, String s) {
+
+        int n = nums.length;
+        long sum = 0;
+
+        // store pair (value, index)
+        int[][] arr = new int[n][2];
+
+        for(int i = 0; i < n; i++){
+            arr[i][0] = nums[i];
+            arr[i][1] = i;
+        }
+
+        // sort decreasing by value
+        Arrays.sort(arr, (a,b) -> b[0] - a[0]);
+
+        // mark used indexes
+        boolean[] used = new boolean[n];
+
+        for(int i = 0; i < n; i++){
+            if(s.charAt(i) == '1'){
+
+                // find best available value in prefix [0...i]
+                for(int j = 0; j < n; j++){
+
+                    int val = arr[j][0];
+                    int idx = arr[j][1];
+
+                    // value usable only if:
+                    // 1) index <= i
+                    // 2) not used
+                    if(idx <= i && !used[idx]){
+                        used[idx] = true;
+                        sum += val;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return sum;
+    }
+}

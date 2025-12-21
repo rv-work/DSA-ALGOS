@@ -93,3 +93,60 @@ class Solution {
         return sum;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public long maximumScore(int[] nums, String s) {
+
+        int n = nums.length;
+        long sum = 0;
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+        boolean[] used = new boolean[n];
+
+        for (int i = 0; i < n; i++) {
+
+            // unlock nums[i]
+            pq.add(nums[i]);
+
+            if (s.charAt(i) == '1') {
+
+                // pick highest available unused <= i
+                while (!pq.isEmpty()) {
+                    int top = pq.poll();
+
+                    // ensure value from 0..i unused
+                    int idx = findIndex(nums, top, used, i);
+
+                    if (idx != -1) {
+                        used[idx] = true;
+                        sum += top;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return sum;
+    }
+
+    private int findIndex(int[] nums, int val, boolean[] used, int limit) {
+
+        for (int i = limit; i >= 0; i--) {
+            if (!used[i] && nums[i] == val) return i;
+        }
+        return -1;
+    }
+}

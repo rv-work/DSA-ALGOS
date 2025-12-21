@@ -29,3 +29,17 @@ class Solution {
         return sum ;
     }
 }
+
+// wrong because we can not go backward so ........
+
+// Input
+// nums =
+// [1,8,8,4,6,2]
+// s =
+// "110100"
+
+
+// Output
+// 20
+// Expected
+// 17

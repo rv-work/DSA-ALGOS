@@ -82,3 +82,63 @@ class Solution {
 // 4
 // Expected
 // 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public int minSwaps(int[] nums, int[] forbidden) {
+        int n = nums.length;
+
+        Map<Integer, Integer> cntNums = new HashMap<>();
+        Map<Integer, Integer> cntForb = new HashMap<>();
+
+        for (int x : nums)
+            cntNums.put(x, cntNums.getOrDefault(x, 0) + 1);
+        for (int x : forbidden)
+            cntForb.put(x, cntForb.getOrDefault(x, 0) + 1);
+
+        // Feasibility check
+        for (int val : cntNums.keySet())
+            if (cntNums.get(val) + cntForb.getOrDefault(val, 0) > n)
+                return -1;
+
+        int bad = 0;
+        Map<Integer, Integer> cntBad = new HashMap<>();
+
+        for (int i = 0; i < n; ++i) 
+            if (nums[i] == forbidden[i]) {
+                bad++;
+                int v = nums[i];
+                cntBad.put(v, cntBad.getOrDefault(v, 0) + 1);
+            }
+
+        if (bad == 0) return 0;
+
+        int maxFreq = 0;
+        // just to ensure that in bad we are not swapping the same element ...so for that maxFreq......
+        for (int freq : cntBad.values())
+            maxFreq = Math.max(maxFreq, freq);
+
+        return Math.max((bad + 1) / 2, maxFreq); 
+       
+    }
+}

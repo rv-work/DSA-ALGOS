@@ -29,7 +29,7 @@ class Solution {
 
 
 
-
+// MEMO
 
 
 
@@ -72,7 +72,7 @@ class Solution {
 
 
 
-
+// TAB
 
 
 class Solution {
@@ -121,5 +121,47 @@ class Solution {
         }
 
         return dp[k][0][1];
+    }
+}
+
+
+
+
+
+class Solution {
+
+    public int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        if (n == 0 || k == 0) return 0;
+
+        // ahead = dp for idx+1
+        // curr  = dp for idx
+        int[][] ahead = new int[k + 1][2];
+        int[][] curr  = new int[k + 1][2];
+
+        for (int idx = n - 1; idx >= 0; idx--) {
+            for (int i = 1; i <= k; i++) {
+
+                int buy, sell, skip;
+
+                // canBuy = 1
+                buy  = -prices[idx] + ahead[i][0];
+                skip = ahead[i][1];
+                curr[i][1] = Math.max(buy, skip);
+
+                // canBuy = 0
+                sell = prices[idx] + ahead[i - 1][1];
+                skip = ahead[i][0];
+                curr[i][0] = Math.max(sell, skip);
+            }
+
+            // move curr → ahead
+            for (int i = 0; i <= k; i++) {
+                ahead[i][0] = curr[i][0];
+                ahead[i][1] = curr[i][1];
+            }
+        }
+
+        return ahead[k][1];
     }
 }

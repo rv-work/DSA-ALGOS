@@ -68,3 +68,58 @@ class Solution {
         return solve(prices, k, 0, 1, dp);
     }
 }
+
+
+
+
+
+
+
+class Solution {
+
+    int solve(int[] prices, int k, int idx, int canBuy, int[][][] dp) {
+        if (k == 0 || idx == prices.length) return 0;
+
+        if (dp[k][idx][canBuy] != -1) 
+            return dp[k][idx][canBuy];
+
+        int buy = 0, notBuy = 0, sell = 0, notSell = 0;
+
+        if (canBuy == 1) {
+            buy = -prices[idx] + solve(prices, k, idx + 1, 0, dp);
+            notBuy = solve(prices, k, idx + 1, 1, dp);
+        } else {
+            sell = prices[idx] + solve(prices, k - 1, idx + 1, 1, dp);
+            notSell = solve(prices, k, idx + 1, 0, dp);
+        }
+
+        return dp[k][idx][canBuy] =
+                Math.max(Math.max(buy, notBuy), Math.max(sell, notSell));
+    }
+
+    public int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        int[][][] dp = new int[k + 1][n + 1][2];
+
+        // base case already 0:
+        // dp[*][n][*] = 0
+        // dp[0][*][*] = 0
+
+        for (int i = 1; i <= k; i++) {
+            for (int idx = n - 1; idx >= 0; idx--) {
+
+                // canBuy = 1
+                int buy = -prices[idx] + dp[i][idx + 1][0];
+                int notBuy = dp[i][idx + 1][1];
+                dp[i][idx][1] = Math.max(buy, notBuy);
+
+                // canBuy = 0
+                int sell = prices[idx] + dp[i - 1][idx + 1][1];
+                int notSell = dp[i][idx + 1][0];
+                dp[i][idx][0] = Math.max(sell, notSell);
+            }
+        }
+
+        return dp[k][0][1];
+    }
+}

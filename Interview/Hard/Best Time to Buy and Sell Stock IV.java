@@ -23,3 +23,48 @@ class Solution {
         return solve(prices , k , 0 , true);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+    int solve(int[] prices, int k, int idx, int canBuy, int[][][] dp) {
+        if (k == 0 || idx == prices.length) return 0;
+
+        if (dp[k][idx][canBuy] != -1) 
+            return dp[k][idx][canBuy];
+
+        int ans;
+        if (canBuy == 1) {
+            int buy = -prices[idx] + solve(prices, k, idx + 1, 0, dp);
+            int skip = solve(prices, k, idx + 1, 1, dp);
+            ans = Math.max(buy, skip);
+        } else {
+            int sell = prices[idx] + solve(prices, k - 1, idx + 1, 1, dp);
+            int skip = solve(prices, k, idx + 1, 0, dp);
+            ans = Math.max(sell, skip);
+        }
+
+        return dp[k][idx][canBuy] = ans;
+    }
+
+    public int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        int[][][] dp = new int[k + 1][n][2];
+        for (int i = 0; i <= k; i++)
+            for (int j = 0; j < n; j++)
+                Arrays.fill(dp[i][j], -1);
+
+        return solve(prices, k, 0, 1, dp);
+    }
+}

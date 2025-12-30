@@ -65,8 +65,23 @@ class Solution {
 
 
 
+//  A 
+// / \
+// B--E   
+// |  |
+// C--D
+
+// in these type of cases DFS will face
+
+// may be it visit like ... A B C D E then found cycle ... A-B-C-D-E-A ok and A-B-C-D-E-B is also ok still not shortes na 
+// now when it will backtrack so on B to E it will it will found that again so it will find B-E while will be counted as B-C-D-E-B ..... which is also not shortest
+// actuall ans is A-B-E-A but it will never get this in this way
 
 
+// now if after B we go to E first then we will get right ans.... which depends on adj build
+
+
+// That's why DFS give but not guaranteed  to be shortest.....
 
 
 

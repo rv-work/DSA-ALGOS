@@ -59,3 +59,58 @@ class Solution {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    int res = Integer.MAX_VALUE;
+    public int findShortestCycle(int n, int[][] edges) {
+        List<Integer>[] graph = new List[n];
+        for (int i = 0; i < n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        for (int[] edge : edges) {
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
+        }
+
+        int[] steps = new int[n];
+        Arrays.fill(steps, Integer.MAX_VALUE);
+        for (int i = 0; i < n; i++) {
+            if (steps[i] == Integer.MAX_VALUE) {
+                dfs(i, -1, graph, steps, 0);
+            }
+        }
+        return res == Integer.MAX_VALUE ? -1 : res;
+    }
+
+    public void dfs(int cur, int parent, List<Integer>[] graph, int[] steps, int step) {
+        // consider example edges = [[5,6],[1,7],[3,8],[5,8],[1,8],[0,4],[8,7],[7,2],[2,5],[3,4]]
+        // n = 9, the bigger cycle is detected first with length 5 and then 4
+        // but the shortest cycle is 3, so can't early return with step > steps[cur]
+        // must keep dfs when we see a visited node with step > step + 1
+        steps[cur] = step;
+        for (int next : graph[cur]) {
+            if (next == parent) {
+                continue;
+            }
+            if (steps[next] > step + 1) {
+                dfs(next, cur, graph, steps, step + 1);                
+            } else if (steps[next] < step){
+                res = Math.min(res, step - steps[next] + 1);
+            }
+        }
+    }
+}

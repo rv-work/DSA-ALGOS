@@ -18,8 +18,6 @@ class Solution {
 
 
 
-
-
 class Solution {
     public int repeatedNTimes(int[] nums) {
         Set<Integer> seen = new HashSet<>();
@@ -38,11 +36,6 @@ class Solution {
 
 
 
-
-
-
-
-
 class Solution {
     public int repeatedNTimes(int[] nums) {
         Arrays.sort(nums);    
@@ -55,3 +48,18 @@ class Solution {
         return -1;
     }
 }
+
+
+class Solution {
+    public int repeatedNTimes(int[] nums) {
+     Arrays.sort(nums);
+
+     int n = nums.length;
+
+     if(nums[0] == nums[1]) return nums[0];
+     if(nums[n-1] == nums[n-2]) return  nums[n-1];
+     else return nums[n/2];
+
+    }
+}
+

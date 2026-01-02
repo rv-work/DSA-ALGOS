@@ -24,3 +24,41 @@ class Solution {
         return true;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int n = graph.length;
+        int[] color = new int[n];
+        Queue<Integer> q = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            if (color[i] != 0) continue;
+
+            color[i] = 1;
+            q.add(i);
+
+            while (!q.isEmpty()) {
+                int cur = q.poll();
+                for (int neighbor : graph[cur]) {
+                    if (color[neighbor] == 0) {
+                        color[neighbor] = -color[cur];
+                        q.add(neighbor);
+                    } else if (color[neighbor] == color[cur]) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}

@@ -63,3 +63,19 @@ class Solution {
     }
 }
 
+
+
+class Solution {
+    public int repeatedNTimes(int[] nums) {
+     Arrays.sort(nums);
+
+     int n = nums.length;
+
+     if(nums[0] == nums[1]) return nums[0];
+     else return nums[n/2];
+
+    }
+}
+
+
+

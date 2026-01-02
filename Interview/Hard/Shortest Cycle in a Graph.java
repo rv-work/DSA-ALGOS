@@ -247,3 +247,79 @@ class Solution {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Pair{
+    int depth;
+    int node;
+    Pair(int depth , int node){
+        this.depth = depth;
+        this.node = node;
+    }
+}
+
+class Solution {
+    public int findShortestCycle(int n, int[][] edges) {
+        int ans = Integer.MAX_VALUE;
+
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int[] e : edges) {
+            adj.get(e[0]).add(e[1]);
+            adj.get(e[1]).add(e[0]);
+        }
+
+        for(int k = 0; k < n; k++){
+
+            boolean[] vis = new boolean[n];   
+            int[] par = new int[n];          
+            int[] depth = new int[n];       
+
+            Arrays.fill(par, -1);
+
+            Queue<Pair> q = new LinkedList<>();
+            q.add(new Pair(0, k));
+            vis[k] = true;
+            depth[k] = 0;
+
+            while(!q.isEmpty()){
+                Pair curr = q.poll();
+                int u = curr.node;
+
+                for(int v : adj.get(u)){
+                    if(par[u] == v) continue;
+
+                    if(!vis[v]){
+                        vis[v] = true;
+                        par[v] = u;
+                        depth[v] = depth[u] + 1;
+                        q.add(new Pair(depth[v], v));
+                    }
+                    else{
+                      
+                        ans = Math.min(ans, depth[u] + depth[v] + 1);
+                    }
+                }
+            }
+        }
+
+        return ans == Integer.MAX_VALUE ? -1 : ans;
+    }
+}

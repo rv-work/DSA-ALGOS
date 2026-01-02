@@ -49,3 +49,30 @@ class Solution {
     return rec(prices, 0, 1, fee, dp);
   }
 }
+
+class Solution {
+
+  public int maxProfit(int[] prices, int fee) {
+    int n = prices.length;
+    int[][] dp = new int[n + 1][2];
+
+    for (int idx = n - 1; idx >= 0; idx--) {
+      for (int canBuy = 1; canBuy >= 0; canBuy--) {
+
+        if (canBuy == 1) {
+          int buy = -prices[idx] + dp[idx + 1][0];
+          int skip = dp[idx + 1][1];
+          dp[idx][1] = Math.max(buy, skip);
+
+        } else {
+          int sell = prices[idx] - fee + dp[idx + 1][1];
+          int skip = dp[idx + 1][0];
+          dp[idx][0] = Math.max(sell, skip);
+        }
+      }
+    }
+
+    return dp[0][1];
+
+  }
+}

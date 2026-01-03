@@ -123,3 +123,104 @@ class Solution {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+    int MODULO = 1000000007;
+
+    int getAll(
+        int[] prev,
+        int row,
+        int[] colors,
+        int[][][][] preComputes
+    ) {
+
+        if (row < 0) return 1;
+
+       
+        if (preComputes[row][prev[0]][prev[1]][prev[2]] != -1) {
+            return preComputes[row][prev[0]][prev[1]][prev[2]];
+        }
+
+        int ans = 0;
+
+        for (int a : colors) {
+            if (a == prev[0]) continue;
+
+            for (int b : colors) {
+                if (a == b || b == prev[1]) continue;
+
+                for (int c : colors) {
+                    if (b == c || c == prev[2]) continue;
+
+                    int[] curr = new int[3];
+                    curr[0] = a;
+                    curr[1] = b;
+                    curr[2] = c;
+
+                    ans = (ans + getAll(curr, row - 1, colors, preComputes)) % MODULO;
+                }
+            }
+        }
+
+        preComputes[row][prev[0]][prev[1]][prev[2]] = ans;
+        return ans;
+    }
+
+    public int numOfWays(int n) {
+
+        int[] colors = {1, 2, 3};
+        int ans = 0;
+
+        
+        int[][][][] preComputes = new int[n][4][4][4];
+
+        for (int i = 0; i < n; i++) {
+            for (int a = 0; a < 4; a++) {
+                for (int b = 0; b < 4; b++) {
+                    for (int c = 0; c < 4; c++) {
+                        preComputes[i][a][b][c] = -1;
+                    }
+                }
+            }
+        }
+
+        for (int a : colors) {
+            for (int b : colors) {
+                if (a == b) continue;
+
+                for (int c : colors) {
+                    if (b == c) continue;
+
+                    int[] prev = new int[3];
+                    prev[0] = a;
+                    prev[1] = b;
+                    prev[2] = c;
+
+                    ans = (ans + getAll(prev, n - 2, colors, preComputes)) % MODULO;
+                }
+            }
+        }
+
+        return ans;
+    }
+}
+
+

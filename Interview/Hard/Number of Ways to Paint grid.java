@@ -128,6 +128,39 @@ class Solution {
 
 
 
+/*
+Idea of my memoization:
+
+1) Har row ke liye sirf 12 valid states hote hain (a,b,c),
+   kyunki a!=b aur b!=c hona hi chahiye.
+
+2) Main recursion me state ko aise define kar raha hoon:
+   (row, a, b, c)
+   -> row: upar kitni rows abhi fill karni hain
+   -> (a,b,c): neeche wali row ke colors
+
+3) preComputes[row][a][b][c] ka matlab:
+   agar current row ke neeche (a,b,c) already painted hai,
+   to upar ki 'row' rows ko paint karne ke total ways.
+
+4) Jab kisi state (row,a,b,c) pehli baar aati hai,
+   to recursion poori tarah neeche tak jaata hai
+   (row = 0 tak) aur uska answer calculate karta hai.
+
+5) Is first deep calculation ke dauran,
+   almost saari (row,a,b,c) states memo table me fill ho jaati hain.
+
+6) Jab baad me kisi aur starting state se recursion aati hai,
+   to wo check karti hai:
+   "kya ye (row,a,b,c) pehle calculate ho chuka hai?"
+
+7) Agar haan, to direct memo table se value pick kar li jaati hai,
+   aur dobara calculation nahi hoti.
+
+8) Is tarah har (row,a,b,c) state sirf ek hi baar calculate hoti hai,
+   baaki times sirf reuse hoti hai.
+*/
+
 
 
 

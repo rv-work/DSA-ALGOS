@@ -224,3 +224,84 @@ class Solution {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+    int MODULO = 1_000_000_007;
+
+    public int numOfWays(int n) {
+
+        int[] colors = {1, 2, 3};
+
+        // dp[row][a][b][c]
+        int[][][][] dp = new int[n][4][4][4];
+
+        // -------- BASE CASE (row = 0) --------
+        for (int a : colors) {
+            for (int b : colors) {
+                if (a == b) continue;
+                for (int c : colors) {
+                    if (b == c) continue;
+                    dp[0][a][b][c] = 1;
+                }
+            }
+        }
+
+        // -------- FILL TABLE --------
+        for (int row = 1; row < n; row++) {
+
+            for (int a : colors) {
+                for (int b : colors) {
+                    if (a == b) continue;
+
+                    for (int c : colors) {
+                        if (b == c) continue;
+
+                        long ways = 0;
+
+                        for (int pa : colors) {
+                            if (pa == a) continue;
+
+                            for (int pb : colors) {
+                                if (pb == b) continue;
+
+                                for (int pc : colors) {
+                                    if (pc == c) continue;
+
+                                    ways += dp[row - 1][pa][pb][pc];
+                                }
+                            }
+                        }
+
+                        dp[row][a][b][c] = (int)(ways % MODULO);
+                    }
+                }
+            }
+        }
+
+        // -------- ANSWER --------
+        int ans = 0;
+        for (int a : colors) {
+            for (int b : colors) {
+                if (a == b) continue;
+                for (int c : colors) {
+                    if (b == c) continue;
+                    ans = (ans + dp[n - 1][a][b][c]) % MODULO;
+                }
+            }
+        }
+
+        return ans;
+    }
+}
+
+

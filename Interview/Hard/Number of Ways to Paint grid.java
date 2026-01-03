@@ -305,3 +305,43 @@ class Solution {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+    static final int MOD = 1_000_000_007;
+
+    public int numOfWays(int n) {
+
+        // base case: n = 1
+        long aba = 6;  // patterns like 121
+        long abc = 6;  // patterns like 123
+
+        for (int i = 2; i <= n; i++) {
+
+            long newAba = (aba * 3 + abc * 2) % MOD;
+            long newAbc = (aba * 2 + abc * 2) % MOD;
+
+            aba = newAba;
+            abc = newAbc;
+        }
+
+        return (int) ((aba + abc) % MOD);
+    }
+}
+
+

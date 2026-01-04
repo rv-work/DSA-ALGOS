@@ -141,7 +141,7 @@ Idea of my memoization:
 
 3) preComputes[row][a][b][c] ka matlab:
    agar current row ke neeche (a,b,c) already painted hai,
-   to upar ki 'row' rows ko paint karne ke total ways.
+   to *************************upar kibachin hui rows ko paint karne ke total ways.
 
 4) Jab kisi state (row,a,b,c) pehli baar aati hai,
    to recursion poori tarah neeche tak jaata hai
@@ -160,6 +160,7 @@ Idea of my memoization:
 8) Is tarah har (row,a,b,c) state sirf ek hi baar calculate hoti hai,
    baaki times sirf reuse hoti hai.
 */
+
 
 
 
